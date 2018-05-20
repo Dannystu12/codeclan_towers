@@ -75,4 +75,12 @@ public class Booking {
         return remainingStay <= 0;
     }
 
+    public boolean billSettled(){
+        return bill <= 0;
+    }
+
+    public boolean deletable(){
+        return stayComplete() && billSettled();
+    }
+
 }

@@ -136,4 +136,33 @@ public class BookingTest {
         assertEquals(0, booking.getBill(), 0.1);
     }
 
+    @Test
+    public void canCheckBillSettled(){
+        assertTrue(booking.billSettled());
+    }
+
+    @Test
+    public void canCheckBillNotSettled(){
+        booking.charge(10);
+        assertFalse(booking.billSettled());
+    }
+
+    @Test
+    public void notDeletableIfStayLeft(){
+        assertFalse(booking.deletable());
+    }
+
+    @Test
+    public void notDeletableIfBillLeft(){
+        booking.reduceStay(3);
+        booking.charge(10);
+        assertFalse(booking.deletable());
+    }
+
+    @Test
+    public void deletableIfNoStayOrBill(){
+        booking.reduceStay(3);
+        assertTrue(booking.deletable());
+    }
+
 }

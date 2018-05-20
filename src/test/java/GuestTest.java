@@ -15,6 +15,11 @@ public class GuestTest {
         guest = new Guest("Daniel", 100);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void noNegativeWallet(){
+        Guest guest2 = new Guest("Matthew", -1);
+    }
+
     @Test
     public void hasName(){
         assertEquals("Daniel", guest.getName());

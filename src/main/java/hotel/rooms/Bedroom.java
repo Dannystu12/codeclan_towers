@@ -1,4 +1,4 @@
 package hotel.rooms;
 
-public class Bedroom{
+public class Bedroom extends Room{
 }

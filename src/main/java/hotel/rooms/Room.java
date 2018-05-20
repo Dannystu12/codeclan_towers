@@ -37,6 +37,7 @@ public abstract class Room {
     }
 
     public void removeBooking() throws Exception {
+        if(booking == null) return;
         if(!booking.deletable()) throw new Exception("Cannot double book rooms");
         booking = null;
     }
@@ -51,8 +52,14 @@ public abstract class Room {
         booking.reduceStay(1);
     }
 
+    public boolean readyToCheckout(){
+        return booking.stayComplete();
+    }
 
-
-
+    public void checkout() throws Exception {
+        if(!readyToCheckout() || !hasBooking()) return;
+        booking.settleBill();
+        removeBooking();
+    }
 
 }

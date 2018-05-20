@@ -4,7 +4,14 @@ import hotel.enums.RateType;
 
 public class ConferenceRoom extends Room{
 
-    public ConferenceRoom(double rate, RateType rateType, int capacity){
-        super(rate, rateType, capacity);
+    private String name;
+
+    public ConferenceRoom(String name, double rate, int capacity){
+        super(rate, RateType.DAILY, capacity);
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
     }
 }

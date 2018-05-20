@@ -1,3 +1,4 @@
+import hotel.enums.RateType;
 import hotel.rooms.ConferenceRoom;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,5 +17,10 @@ public class ConferenceRoomTest {
     @Test
     public void hasName(){
         assertEquals("Washington Room", conferenceRoom.getName());
+    }
+
+    @Test
+    public void correctRateType(){
+        assertEquals(RateType.DAILY, conferenceRoom.getRateType());
     }
 }

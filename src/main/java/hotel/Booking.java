@@ -83,4 +83,9 @@ public class Booking {
         return stayComplete() && billSettled();
     }
 
+    public List<Guest> getGuests(){
+        ArrayList<Guest> guestsCopy = new ArrayList<>(guests);
+        return guestsCopy;
+    }
+
 }

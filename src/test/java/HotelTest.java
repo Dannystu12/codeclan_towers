@@ -9,8 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class HotelTest {
 
@@ -70,6 +73,63 @@ public class HotelTest {
     @Test
     public void hasActiveBookings(){
         assertEquals(1, hotel.getActiveBookings().length);
+    }
+
+    @Test
+    public void canBookRoom(){
+        Room room = hotel.getVacantRooms()[0];
+        assertFalse(room.hasBooking());
+        Guest guest = new Guest("Daniel", 100);
+        ArrayList<Guest> guests = new ArrayList<Guest>();
+        guests.add(guest);
+        hotel.bookRoom(new Booking(2, guests), room);
+        assertTrue(room.hasBooking());
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void cantBookRoomNoFunds(){
+        Room room = hotel.getVacantRooms()[0];
+        assertFalse(room.hasBooking());
+        Guest guest = new Guest("Daniel", 0);
+        ArrayList<Guest> guests = new ArrayList<Guest>();
+        guests.add(guest);
+        hotel.bookRoom(new Booking(2, guests), room);
+    }
+
+    @Test
+    public void canGetGuestsForRoom(){
+        Room[] activeRooms = hotel.getActiveBookings();
+        List<Guest> guests = hotel.getGuests(activeRooms[0]);
+        System.out.println(activeRooms[0].getBooking());
+        assertEquals(2, guests.size());
+    }
+
+    @Test
+    public void cantGetGuestsForVacantRoom(){
+        Room[] vacantRooms = hotel.getVacantRooms();
+        List<Guest> guests = hotel.getGuests(vacantRooms[0]);
+        assertEquals(0, guests.size());
+    }
+
+    @Test
+    public void canAdvanceTimeAccrual() throws Exception {
+        Room room = hotel.getActiveBookings()[0];
+        hotel.advanceTime();
+        assertEquals(125,room.getBooking().getBill(), 0.1);
+        assertEquals(1,room.getBooking().getRemainingStay());
+    }
+
+    @Test
+    public void canAdvanceTimeCheckout() throws Exception {
+        Room room = hotel.getActiveBookings()[0];
+        Booking booking = room.getBooking();
+        hotel.advanceTime();
+        hotel.advanceTime();
+
+        assertEquals(260, hotel.getFunds(), 0.01);
+        assertFalse(room.hasBooking());
+        assertTrue(booking.deletable());
     }
 
 }

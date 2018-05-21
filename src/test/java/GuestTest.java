@@ -76,4 +76,5 @@ public class GuestTest {
         assertFalse(guest.canAfford(-200));
     }
 
+
 }

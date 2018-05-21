@@ -32,11 +32,29 @@ public class Hotel {
     }
 
     public Room[] getVacantRooms(){
-        return (Room[]) rooms.stream().filter(room -> !room.hasBooking()).toArray();
+        return (Room[]) rooms.stream().filter(room -> !room.hasBooking()).toArray(Room[]::new);
     }
 
     public Room[] getActiveBookings(){
-        return  rooms.stream().filter(room -> !room.hasBooking()).toArray(Room[]);
+        return  rooms.stream().filter(room -> room.hasBooking()).toArray(Room[]::new);
+    }
+
+    public List<Guest> getGuests(Room room){
+        ArrayList<Guest> result = new ArrayList<>();
+        if (!rooms.contains(room)) return result;
+        Booking booking = room.getBooking();
+        if(booking == null) return result;
+        return booking.getGuests();
+    }
+
+    public void advanceTime() throws Exception {
+        for(Room room : getActiveBookings()){
+            room.billStay();
+            double bill = room.getBooking().getBill();
+            room.checkout();
+            if(!room.hasBooking()) funds += bill;
+        }
+
     }
 
 }

@@ -1,7 +1,10 @@
 package hotel.rooms;
 
 import hotel.Booking;
+import hotel.Guest;
 import hotel.enums.RateType;
+
+import java.util.List;
 
 public abstract class Room {
     private double rate;
@@ -25,6 +28,10 @@ public abstract class Room {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public Booking getBooking(){
+        return booking;
     }
 
     public void setBooking(Booking booking){

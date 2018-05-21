@@ -8,9 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class RoomTest {
     Room room;
@@ -138,6 +136,19 @@ public class RoomTest {
         room.checkout();
         assertFalse(booking.deletable());
         assertTrue(room.hasBooking());
+    }
+
+    @Test
+    public void canGetBooking(){
+        guests.remove(0);
+        booking = new Booking(1, guests);
+        room.setBooking(booking);
+        assertEquals(booking, room.getBooking());
+    }
+
+    @Test
+    public void cannotGetNullBooking(){
+        assertNull(room.getBooking());
     }
 
 }

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -163,6 +164,15 @@ public class BookingTest {
     public void deletableIfNoStayOrBill(){
         booking.reduceStay(3);
         assertTrue(booking.deletable());
+    }
+
+    @Test
+    public void canGetCopyOfGuests(){
+        List<Guest> guests = booking.getGuests();
+        assertEquals(2, guests.size());
+        guests.add(new Guest("Tess", 50));
+        guests = booking.getGuests();
+        assertEquals(2, guests.size());
     }
 
 }

@@ -101,7 +101,6 @@ public class HotelTest {
     public void canGetGuestsForRoom(){
         Room[] activeRooms = hotel.getActiveBookings();
         List<Guest> guests = hotel.getGuests(activeRooms[0]);
-        System.out.println(activeRooms[0].getBooking());
         assertEquals(2, guests.size());
     }
 
